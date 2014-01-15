@@ -3,6 +3,8 @@
 
 #include "buffer.h"
 
+#define RFC1123_TIME_LEN 29
+
 struct request_struct {
     FCGX_Request fcgi;
     /* output buffering */
@@ -24,8 +26,12 @@ void luaL_pushrequest(lua_State* L, request_t* r);
 
 extern const struct luaL_Reg request_methods[];
 
+/* r:status(code) */
+int L_req_status(lua_State *L);
 /* r:header(string, <string>) */
 int L_req_header(lua_State *L);
+/* r:cookie(name, value, expires, path, domain) */
+int L_req_cookie(lua_State *L);
 /* r:puts(string) */
 int L_req_puts(lua_State *L);
 /* r:gets() returns string */
